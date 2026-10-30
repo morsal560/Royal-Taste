@@ -1,0 +1,130 @@
+.about-hero {
+  min-height: 320px;
+  background:
+    linear-gradient(rgba(25, 17, 11, 0.75), rgba(25, 17, 11, 0.75)),
+    url("https://images.unsplash.com/photo-1517248135467-4c7edcad34c4");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+  padding: 50px 20px;
+}
+
+.about-hero span,
+.section-subtitle {
+  color: #c49a60;
+  letter-spacing: 3px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.about-hero h1 {
+  font-size: 48px;
+  margin: 15px 0;
+}
+
+.about-hero p {
+  max-width: 550px;
+  line-height: 1.8;
+  color: #eee;
+}
+
+.about-content {
+  display: flex;
+  align-items: center;
+  gap: 55px;
+  padding: 90px 8%;
+}
+
+.about-image,
+.about-text {
+  flex: 1;
+}
+
+.about-image img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.about-text h2 {
+  font-size: 36px;
+  margin: 15px 0 20px;
+  color: #392719;
+}
+
+.about-text p {
+  color: #74675c;
+  line-height: 1.9;
+  margin-bottom: 15px;
+}
+
+.about-btn {
+  background: #c49a60;
+  color: #211810;
+  border: none;
+  padding: 13px 25px;
+  margin-top: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.about-values {
+  background: #211810;
+  padding: 70px 8%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+}
+
+.value-card {
+  text-align: center;
+  color: #f5eee4;
+  padding: 25px 15px;
+}
+
+.value-card svg {
+  color: #c49a60;
+  font-size: 35px;
+  margin-bottom: 18px;
+}
+
+.value-card h3 {
+  margin-bottom: 12px;
+}
+
+.value-card p {
+  color: #c9bdb0;
+  line-height: 1.7;
+  font-size: 14px;
+}
+
+@media (max-width: 900px) {
+  .about-values {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .about-content {
+    gap: 30px;
+    padding: 60px 5%;
+  }
+}
+
+@media (max-width: 600px) {
+  .about-content {
+    flex-direction: column;
+  }
+
+  .about-hero h1 {
+    font-size: 34px;
+  }
+
+  .about-values {
+    grid-template-columns: 1fr;
+  }
+}
