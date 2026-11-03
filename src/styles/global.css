@@ -1,11 +1,38 @@
+/* Reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* Light Mode - Default */
+:root {
+  --bg-color: #FFF8ED;
+  --surface-color: #FFFFFF;
+  --text-color: #45372D;
+  --primary-color: #E87935;
+  --secondary-color: #527A52;
+  --border-color: #EADCCB;
+  --footer-color: #45372D;
+  --shadow-color: rgba(69, 55, 45, 0.10);
+}
+
+/* Dark Mode */
+[data-theme="dark"] {
+  --bg-color: #29231F;
+  --surface-color: #382F29;
+  --text-color: #FFF8ED;
+  --primary-color: #E87935;
+  --secondary-color: #85A878;
+  --border-color: #51443A;
+  --footer-color: #211C19;
+  --shadow-color: rgba(0, 0, 0, 0.25);
+}
+
+/* Body */
 body {
   font-family: Arial, sans-serif;
-  background-color: #f8f3eb;
-  color: #211810;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }

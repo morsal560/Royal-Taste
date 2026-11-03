@@ -1,7 +1,14 @@
+
 import { useState } from "react";
-import { FaShoppingBag } from "react-icons/fa";
+import {
+  FaShoppingBag,
+  FaTimes,
+  FaUtensils
+} from "react-icons/fa";
+
 import "../styles/Menu.css";
 
+// Food Data
 const foods = [
   {
     id: 1,
@@ -69,6 +76,7 @@ const foods = [
   }
 ];
 
+// Food Categories
 const categories = [
   "All",
   "Burgers",
@@ -80,7 +88,10 @@ const categories = [
 
 function Menu() {
   const [activeCategory, setActiveCategory] = useState("All");
+  const [showAll, setShowAll] = useState(false);
+  const [selectedFood, setSelectedFood] = useState(null);
 
+  // Filter Foods
   const filteredFoods =
     activeCategory === "All"
       ? foods
@@ -88,22 +99,47 @@ function Menu() {
           (food) => food.category === activeCategory
         );
 
+  // Show First Six Foods
+  const visibleFoods = showAll
+    ? filteredFoods
+    : filteredFoods.slice(0, 6);
+
+  // Change Category
+  const handleCategoryChange = (category) => {
+    setActiveCategory(category);
+    setShowAll(false);
+  };
+
   return (
     <main className="menu-page">
 
+      {/* Menu Hero */}
       <section className="menu-hero">
         <span>DISCOVER OUR TASTE</span>
+
         <h1>Our Delicious Menu</h1>
-        <p>Fresh ingredients, amazing flavors and unforgettable meals.</p>
+
+        <p>
+          Fresh ingredients, amazing flavors and
+          unforgettable meals.
+        </p>
       </section>
 
+      {/* Menu Section */}
       <section className="menu-section">
 
         <div className="menu-heading">
           <span>EXPLORE OUR FOOD</span>
+
           <h2>Choose Your Favorite</h2>
+
+          <p>
+            Explore our selection and find something
+            delicious to enjoy.
+          </p>
         </div>
 
+        {/* Food Categories */}
         <div className="menu-categories">
           {categories.map((category) => (
             <button
@@ -111,22 +147,29 @@ function Menu() {
               className={
                 activeCategory === category ? "active" : ""
               }
-              onClick={() => setActiveCategory(category)}
+              onClick={() => handleCategoryChange(category)}
             >
               {category}
             </button>
           ))}
         </div>
 
+        {/* Food Cards */}
         <div className="menu-grid">
 
-          {filteredFoods.map((food) => (
-            <div className="menu-card" key={food.id}
-            data-aos="fade-up">
+          {visibleFoods.map((food) => (
+            <div
+              className="menu-card"
+              key={food.id}
+              data-aos="fade-up"
+            >
 
-              <img src={food.image} alt={food.name} />
-
-              <div className="menu-card-content">
+              <img
+                src={food.image}
+                alt={food.name}
+                loading="lazy"
+              />
+<div className="menu-card-content">
 
                 <span className="food-category">
                   {food.category}
@@ -137,11 +180,27 @@ function Menu() {
                 <p>{food.description}</p>
 
                 <div className="food-bottom">
-                  <strong>${food.price.toFixed(2)}</strong>
-                  <button aria-label={`Order ${food.name}`}>
+
+                  <strong>
+                    ${food.price.toFixed(2)}
+                  </strong>
+
+                  <button
+                    onClick={() => setSelectedFood(food)}
+                    aria-label={`View details of ${food.name}`}
+                    title="View food details"
+                  >
                     <FaShoppingBag />
                   </button>
+
                 </div>
+
+                <button
+                  className="food-details-btn"
+                  onClick={() => setSelectedFood(food)}
+                >
+                  View Details
+                </button>
 
               </div>
             </div>
@@ -149,7 +208,85 @@ function Menu() {
 
         </div>
 
+        {/* Show More Button */}
+        {filteredFoods.length > 6 && (
+          <div className="show-more-container">
+
+            <button
+              className="show-more-btn"
+              onClick={() => setShowAll(!showAll)}
+            >
+              {showAll ? "Show Less" : "Show More"}
+            </button>
+
+          </div>
+        )}
+
+        {/* No Food Message */}
+        {filteredFoods.length === 0 && (
+          <p className="no-foods">
+            No food items found in this category.
+          </p>
+        )}
+
       </section>
+
+      {/* Food Details Modal */}
+      {selectedFood && (
+        <div
+          className="food-modal-overlay"
+          onClick={() => setSelectedFood(null)}
+        >
+
+          <div
+            className="food-modal"
+            onClick={(event) => event.stopPropagation()}
+          >
+
+            <button
+              className="modal-close"
+              onClick={() => setSelectedFood(null)}
+              aria-label="Close details"
+            >
+              <FaTimes />
+            </button>
+
+            <img
+              src={selectedFood.image}
+              alt={selectedFood.name}
+            />
+
+            <div className="food-modal-content">
+
+              <span className="food-category">
+                {selectedFood.category}
+              </span>
+
+              <h2>{selectedFood.name}</h2>
+
+              <p>{selectedFood.description}</p>
+
+              <strong>
+                ${selectedFood.price.toFixed(2)}
+              </strong>
+
+              <p className="modal-note">
+                <FaUtensils />
+                Contact us to place your order.
+              </p>
+
+              <button
+                className="show-more-btn"
+                onClick={() => setSelectedFood(null)}
+              >
+                Close
+              </button>
+
+            </div>
+
+          </div>
+        </div>
+      )}
 
     </main>
   );
